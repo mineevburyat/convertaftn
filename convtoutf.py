@@ -22,7 +22,6 @@ def createConfig(path):
  
  
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG, filename='convAFTN.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
     # если нет файла настроек, то создать и выйти сообщив что создан файл с параметрами по умолчанию
     inifile = "settings.ini"
     if not os.path.exists(inifile):
@@ -38,6 +37,18 @@ if __name__ == "__main__":
     outputCode = config.get("general", "OutputCode")
     pathOut = config.get("general", "pathOutput")
     processFlag = config.get("general", "ProcessFlag")
+    logLevel = config.get("general", "logLevel")
+    # настроить уровень журналирования
+    if logLevel == "info":
+        logLevel = logging.INFO
+    elif logLevel == "debug":
+        logLevel = logging.DEBUG
+    elif logLevel == "warning":
+        logLevel = logging.WARNING
+    else:
+        logLevel = logging.ERROR
+    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    logging.basicConfig(level=logLevel, filename='convAFTN.log', filemode='a', format=formatter)
     if processFlag == "all":
         #обработать все телеграммы в папке
         logging.warning("Converting all files in AFTN folder!")
@@ -66,7 +77,7 @@ if __name__ == "__main__":
         #обрабатывать только сегодняшние телеграммы
         currentDate = datetime.now()
         strline =  "Start script with process flag today in " + str(currentDate)
-        logging.info(strline)
+        logging.warning(strline)
         pathKey = '-'.join([str(currentDate.year),str(currentDate.month).zfill(2),str(currentDate.day).zfill(2)])
         pathAFTN = os.path.join(pathAFTN,str(currentDate.year), str(currentDate.month).zfill(2), str(currentDate.day).zfill(2))
         #восстановить список конвертированных файлов
