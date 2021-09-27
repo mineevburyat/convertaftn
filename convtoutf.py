@@ -14,6 +14,7 @@ def createConfig(path):
     config.set("general", "pathInputAFTN", "C:\\Users\\user\\Desktop\\aftnin")
     config.set("general", "pathOutput", "out\\")
     config.set("general", "InputCode", "cp866")
+    config.set("general", "OutputCode", "utf-8")
     config.set("general", "ProcessFlag", "all") #может быть all или today
     config.set("general", "logLevel", "info")
     with open(path, "w") as config_file:
@@ -34,6 +35,7 @@ if __name__ == "__main__":
     config.read(inifile)
     pathAFTN = config.get("general", "pathInputAFTN")
     encodingAFTN = config.get("general", "InputCode")
+    outputCode = config.get("general", "OutputCode")
     pathOut = config.get("general", "pathOutput")
     processFlag = config.get("general", "ProcessFlag")
     if processFlag == "all":
@@ -51,7 +53,7 @@ if __name__ == "__main__":
                     newfileName = file866Name[len(pathAFTN)+1:].replace('\\', '-')
                     #записать сконвертированный файл по указанному пути
                     newfileName = os.path.join(pathOut, newfileName)
-                    with open(newfileName, 'w') as utffile:
+                    with open(newfileName, 'w', encoding=outputCode) as utffile:
                         utffile.write(filedata)
                     strline = "Read " + file866Name + " file and save as " + newfileName
                     logging.info(strline)
@@ -95,7 +97,7 @@ if __name__ == "__main__":
                         newfileName = file866Name[len(config.get("general", "pathInputAFTN"))+1:].replace('\\', '-')
                         #записать сконвертированный файл по указанному пути
                         newfileName = os.path.join(pathOut, newfileName)
-                        with open(newfileName, 'w', encoding='utf-8') as utffile:
+                        with open(newfileName, 'w', encoding=outputCode) as utffile:
                             utffile.write(filedata)
                         strline = "Read " + file866Name + " file and save as " + newfileName
                         logging.info(strline)
