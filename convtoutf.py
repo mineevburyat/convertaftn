@@ -59,7 +59,7 @@ if __name__ == "__main__":
                 with open(file866Name, 'r', encoding=encodingAFTN) as file:
                     filedata = file.read()
                 # обрабатывать только информационные телеграммы и отбрасывать сервисные
-                if filedata.find('ЦХ') == -1 or filedata.find('СЖЦ') == -1:
+                if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
                     #сформировать новое имя для выходного файла
                     newfileName = file866Name[len(pathAFTN)+1:].replace('\\', '-')
                     #записать сконвертированный файл по указанному пути
@@ -103,10 +103,10 @@ if __name__ == "__main__":
                     data_pickle[pathKey].append(file866Name)
                     with open(file866Name, 'r', encoding=encodingAFTN) as file:
                         filedata = file.read()
-                        print(filedata)
-                    if filedata.find('ЦХ') == -1 or filedata.find('СЖЦ') == -1:
+                        #print(filedata)
+                    if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
                         #сформировать новое имя для выходного файла
-                        print('OK')
+                        #print('OK', filedata.find('ЦХ'), filedata.find('СЖЦ'))
                         newfileName = file866Name[len(config.get("general", "pathInputAFTN"))+1:].replace('\\', '-')
                         #записать сконвертированный файл по указанному пути
                         newfileName = os.path.join(pathOut, newfileName)
@@ -114,8 +114,8 @@ if __name__ == "__main__":
                             utffile.write(filedata)
                         strline = "Read " + file866Name + " file and save as " + newfileName
                         logging.info(strline)
-                    else:
-                        print("Service")
+                    #else:
+                        #print("Service")
             #сохранить список обработаннных файлов
             with open('data.pickle', 'wb') as f_data:
                 pickle.dump(data_pickle, f_data)
