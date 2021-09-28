@@ -47,7 +47,7 @@ if __name__ == "__main__":
         logLevel = logging.WARNING
     else:
         logLevel = logging.ERROR
-    formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    formatter = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     logging.basicConfig(level=logLevel, filename='convAFTN.log', filemode='a', format=formatter)
     if processFlag == "all":
         #обработать все телеграммы в папке
@@ -103,8 +103,10 @@ if __name__ == "__main__":
                     data_pickle[pathKey].append(file866Name)
                     with open(file866Name, 'r', encoding=encodingAFTN) as file:
                         filedata = file.read()
+                        print(filedata)
                     if filedata.find('ЦХ') == -1 or filedata.find('СЖЦ') == -1:
                         #сформировать новое имя для выходного файла
+                        print('OK')
                         newfileName = file866Name[len(config.get("general", "pathInputAFTN"))+1:].replace('\\', '-')
                         #записать сконвертированный файл по указанному пути
                         newfileName = os.path.join(pathOut, newfileName)
@@ -112,6 +114,8 @@ if __name__ == "__main__":
                             utffile.write(filedata)
                         strline = "Read " + file866Name + " file and save as " + newfileName
                         logging.info(strline)
+                    else:
+                        print("Service")
             #сохранить список обработаннных файлов
             with open('data.pickle', 'wb') as f_data:
                 pickle.dump(data_pickle, f_data)
