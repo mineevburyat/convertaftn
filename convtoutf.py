@@ -59,15 +59,15 @@ if __name__ == "__main__":
                 with open(file866Name, 'r', encoding=encodingAFTN) as file:
                     filedata = file.read()
                 # обрабатывать только информационные телеграммы и отбрасывать сервисные
-                if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
-                    #сформировать новое имя для выходного файла
-                    newfileName = file866Name[len(pathAFTN)+1:].replace('\\', '-')
-                    #записать сконвертированный файл по указанному пути
-                    newfileName = os.path.join(pathOut, newfileName)
-                    with open(newfileName, 'w', encoding=outputCode) as utffile:
-                        utffile.write(filedata)
-                    strline = "Read " + file866Name + " file and save as " + newfileName
-                    logging.info(strline)
+                # if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
+                #сформировать новое имя для выходного файла
+                newfileName = file866Name[len(pathAFTN)+1:].replace('\\', '-')
+                #записать сконвертированный файл по указанному пути
+                newfileName = os.path.join(pathOut, newfileName)
+                with open(newfileName, 'w', encoding=outputCode) as utffile:
+                    utffile.write(filedata)
+                strline = "Read " + file866Name + " file and save as " + newfileName
+                logging.info(strline)
         #при следующем запуске обрабатывать только текущую дату -  сменить флаг в ini файле
         config.set("general", "ProcessFlag", "today")
         with open(inifile, "w") as config_file:
@@ -104,16 +104,16 @@ if __name__ == "__main__":
                     with open(file866Name, 'r', encoding=encodingAFTN) as file:
                         filedata = file.read()
                         #print(filedata)
-                    if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
-                        #сформировать новое имя для выходного файла
-                        #print('OK', filedata.find('ЦХ'), filedata.find('СЖЦ'))
-                        newfileName = file866Name[len(config.get("general", "pathInputAFTN"))+1:].replace('\\', '-')
-                        #записать сконвертированный файл по указанному пути
-                        newfileName = os.path.join(pathOut, newfileName)
-                        with open(newfileName, 'w', encoding=outputCode) as utffile:
-                            utffile.write(filedata)
-                        strline = "Read " + file866Name + " file and save as " + newfileName
-                        logging.info(strline)
+                    # if (filedata.find('ЦХ') == -1) and (filedata.find('СЖЦ') == -1):
+                    #сформировать новое имя для выходного файла
+                    #print('OK', filedata.find('ЦХ'), filedata.find('СЖЦ'))
+                    newfileName = file866Name[len(config.get("general", "pathInputAFTN"))+1:].replace('\\', '-')
+                    #записать сконвертированный файл по указанному пути
+                    newfileName = os.path.join(pathOut, newfileName)
+                    with open(newfileName, 'w', encoding=outputCode) as utffile:
+                        utffile.write(filedata)
+                    strline = "Read " + file866Name + " file and save as " + newfileName
+                    logging.info(strline)
                     #else:
                         #print("Service")
             #сохранить список обработаннных файлов
