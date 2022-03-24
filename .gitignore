@@ -3,3 +3,7 @@ convtoutf.exe
 convAFTN.log
 /out
 /src
+/__pycache__
+/build
+convtoutf.spec
+/dist
